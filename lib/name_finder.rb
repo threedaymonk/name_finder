@@ -1,22 +1,23 @@
 class NameFinder
   def initialize(data={})
-    @root = data
+    @data = data
+    @root = NodeProxy.new(@data)
   end
 
   def add(term)
-    NodeProxy.new(@root).add(normalize(term) + " ", term)
+    @root.add(normalize(term) + " ", term)
   end
 
   def find(haystack)
     each_set_of_words(haystack) do |words|
-      found = NodeProxy.new(@root).find(words + " ")
+      found = @root.find(words + " ")
       return found if found
     end
     nil
   end
 
   def export
-    @root
+    @data
   end
 
 private
