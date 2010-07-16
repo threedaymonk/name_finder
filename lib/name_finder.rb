@@ -1,6 +1,6 @@
 class NameFinder
-  def initialize
-    @root = {}
+  def initialize(data={})
+    @root = data
   end
 
   def add(term)
@@ -13,6 +13,10 @@ class NameFinder
       return found if found
     end
     nil
+  end
+
+  def export
+    @root
   end
 
 private

@@ -56,5 +56,12 @@ class NameFinderTest < Test::Unit::TestCase
     nf.add "aa bbbb"
     assert_equal "aa bbb", nf.find("xx aa bbb xx")
   end
+
+  def test_should_export_and_import_tree
+    nf.add "test data"
+    export = nf.export
+    nf2 = NameFinder.new(export)
+    assert_equal "test data", nf2.find("test data")
+  end
 end
 
