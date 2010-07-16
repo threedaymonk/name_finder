@@ -59,6 +59,7 @@ private
       end
     end
 
+  private
     def split_first(expression)
       expression.scan(/^.|.+/)
     end
