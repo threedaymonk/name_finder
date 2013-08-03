@@ -1,6 +1,4 @@
-lib_path = File.expand_path("../../lib", __FILE__)
-$:.unshift lib_path unless $:.include?(lib_path)
-require "test/unit"
+require File.expand_path("../test_helper", __FILE__)
 require "name_finder"
 
 class NameFinderTest < Test::Unit::TestCase
