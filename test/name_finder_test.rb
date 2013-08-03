@@ -1,65 +1,61 @@
 require File.expand_path("../test_helper", __FILE__)
 require "name_finder"
 
-class NameFinderTest < Test::Unit::TestCase
+describe NameFinder do
 
-  def setup
-    @nf = NameFinder.new
-  end
-  attr_reader :nf
+  subject { NameFinder.new }
 
-  def test_should_find_an_exact_match
-    nf.add "aa bb"
-    assert_equal "aa bb", nf.find("aa bb")
+  it "should find an exact match" do
+    subject.add "aa bb"
+    subject.find("aa bb").must_equal "aa bb"
   end
 
-  def test_should_be_case_insensitive_and_case_preserving
-    nf.add "Aa bb"
-    assert_equal "Aa bb", nf.find("AA BB")
+  it "should be case insensitive and case preserving" do
+    subject.add "Aa bb"
+    subject.find("AA BB").must_equal "Aa bb"
   end
 
-  def test_should_find_a_substring_match_with_text_before
-    nf.add "aa bb"
-    assert_equal "aa bb", nf.find("xx aa bb")
+  it "should find a substring match with text before" do
+    subject.add "aa bb"
+    subject.find("xx aa bb").must_equal "aa bb"
   end
 
-  def test_should_find_a_substring_match_with_text_after
-    nf.add "aa bb"
-    assert_equal "aa bb", nf.find("aa bb")
+  it "should find a substring match with text after" do
+    subject.add "aa bb"
+    subject.find("aa bb xx").must_equal "aa bb"
   end
 
-  def test_should_find_a_substring_match_with_text_before_and_after
-    nf.add "aa bb"
-    assert_equal "aa bb", nf.find("xx aa bb xx")
+  it "should find a substring match with text before and after" do
+    subject.add "aa bb"
+    subject.find("xx aa bb xx").must_equal "aa bb"
   end
 
-  def test_should_return_nil_for_no_match
-    assert_nil nf.find("aa")
+  it "should return nil for no match" do
+    subject.find("aa").must_be_nil
   end
 
-  def test_should_not_find_a_substring_that_does_not_end_on_a_word_boundary
-    nf.add "aa bb"
-    assert_nil nf.find("aa bbb")
+  it "should not find a substring that does not end on a word boundary" do
+    subject.add "aa bb"
+    subject.find("aa bbb").must_be_nil
   end
 
-  def test_should_not_find_a_substring_that_does_not_begin_on_a_word_boundary
-    nf.add "aa bb"
-    assert_nil nf.find("aaa bb")
+  it "should not find a substring that does not begin on a word boundary" do
+    subject.add "aa bb"
+    subject.find("aaa bb").must_be_nil
   end
 
-  def test_should_find_longest_exact_match
-    nf.add "aa"
-    nf.add "aa bb"
-    nf.add "aa bbb"
-    nf.add "aa bbbb"
-    assert_equal "aa bbb", nf.find("xx aa bbb xx")
+  it "should find longest exact match" do
+    subject.add "aa"
+    subject.add "aa bb"
+    subject.add "aa bbb"
+    subject.add "aa bbbb"
+    subject.find("xx aa bbb xx").must_equal "aa bbb"
   end
 
-  def test_should_export_and_import_tree
-    nf.add "test data"
-    export = nf.export
+  it "should export and import tree" do
+    subject.add "test data"
+    export = subject.export
     nf2 = NameFinder.new(export)
-    assert_equal "test data", nf2.find("test data")
+    nf2.find("test data").must_equal "test data"
   end
 end
-
