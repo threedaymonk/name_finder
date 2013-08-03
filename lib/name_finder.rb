@@ -25,7 +25,7 @@ class NameFinder
 private
   def each_set_of_words(haystack)
     words = normalize(haystack).split(/ /)
-    (0 ... words.length).each do |i|
+    words.each_with_index do |_, i|
       yield words[i .. -1].join(" ")
     end
   end
