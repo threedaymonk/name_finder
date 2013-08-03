@@ -10,7 +10,7 @@ class NameFinder
     @root.add(normalize(term) + " ", term)
   end
 
-  def find(haystack)
+  def find_in(haystack)
     each_set_of_words(haystack) do |words|
       found = @root.find(words + " ")
       return found if found
