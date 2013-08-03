@@ -1,3 +1,5 @@
+require "name_finder/version"
+
 class NameFinder
   def initialize(data={})
     @data = data
