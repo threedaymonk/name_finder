@@ -14,25 +14,16 @@ class NameFinder
   end
 
   def find_in(haystack)
-    each_set_of_words(haystack) do |words|
-      found = root.find(words + delimiter)
-      return found if found
+    find(haystack) do |found|
+      return found
     end
     nil
   end
 
   def find_all_in(haystack)
-    remaining = haystack + delimiter
     [].tap { |all|
-      while remaining.length > 0
-        found = root.find(remaining)
-        if found
-          all << found
-          remaining = remaining[found.length .. -1]
-        else
-          remaining = remaining.sub(/^\S+/, "")
-        end
-        remaining.lstrip!
+      find(haystack) do |found|
+        all << found
       end
     }
   end
@@ -42,10 +33,17 @@ class NameFinder
   end
 
 private
-  def each_set_of_words(haystack)
-    words = normalize(haystack).split(/ /)
-    words.each_with_index do |_, i|
-      yield words[i .. -1].join(delimiter)
+  def find(haystack)
+    remaining = normalize(haystack) + delimiter
+    while remaining.length > 0
+      found = root.find(remaining)
+      if found
+        yield found
+        remaining = remaining[found.length .. -1]
+      else
+        remaining = remaining.sub(/^\S+/, "")
+      end
+      remaining.lstrip!
     end
   end
 
