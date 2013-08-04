@@ -11,8 +11,8 @@ class NameFinder
       if buffer.at_end?
         node[0] = term
       else
-        subtree    = node[buffer.head] ||= {}
-        wrap(subtree).add(buffer.rest, term)
+        subtree = node[buffer.head] ||= {}
+        wrap(subtree).add buffer.rest, term
       end
     end
 
