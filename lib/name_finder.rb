@@ -7,13 +7,15 @@ class NameFinder
     @root = NodeProxy.new(@data)
   end
 
+  attr_reader :root
+
   def add(term)
-    @root.add(normalize(term) + " ", term)
+    root.add(normalize(term) + " ", term)
   end
 
   def find_in(haystack)
     each_set_of_words(haystack) do |words|
-      found = @root.find(words + " ")
+      found = root.find(words + " ")
       return found if found
     end
     nil
@@ -23,7 +25,7 @@ class NameFinder
     remaining = haystack + " "
     [].tap { |all|
       while remaining.length > 0
-        found = @root.find(remaining)
+        found = root.find(remaining)
         if found
           all << found
           remaining = remaining[found.length .. -1]
