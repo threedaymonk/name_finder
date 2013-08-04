@@ -35,12 +35,12 @@ describe NameFinder do
       subject.find_in("aa").must_be_nil
     end
 
-    it "should not find_in a substring that does not end on a word boundary" do
+    it "should not find a substring that does not end on a word boundary" do
       subject.add "aa bb"
       subject.find_in("aa bbb").must_be_nil
     end
 
-    it "should not find_in a substring that does not begin on a word boundary" do
+    it "should not find a substring that does not begin on a word boundary" do
       subject.add "aa bb"
       subject.find_in("aaa bb").must_be_nil
     end
@@ -51,6 +51,21 @@ describe NameFinder do
       subject.add "aa bbb"
       subject.add "aa bbbb"
       subject.find_in("xx aa bbb xx").must_equal "aa bbb"
+    end
+  end
+
+  describe "find_all_in" do
+    it "should find multiple simple matches" do
+      subject.add "aa bb"
+      subject.add "cc dd"
+      subject.find_all_in("aa bb cc dd").must_equal ["aa bb", "cc dd"]
+    end
+
+    it "should not find partially occluded matches" do
+      subject.add "aa bb"
+      subject.add "bb"
+      subject.add "cc dd"
+      subject.find_all_in("aa bb cc dd").must_equal ["aa bb", "cc dd"]
     end
   end
 

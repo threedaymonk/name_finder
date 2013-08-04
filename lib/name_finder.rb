@@ -19,6 +19,22 @@ class NameFinder
     nil
   end
 
+  def find_all_in(haystack)
+    remaining = haystack + " "
+    [].tap { |all|
+      while remaining.length > 0
+        found = @root.find(remaining)
+        if found
+          all << found
+          remaining = remaining[found.length .. -1]
+        else
+          remaining = remaining.sub(/^\S+/, "")
+        end
+        remaining.lstrip!
+      end
+    }
+  end
+
   def export
     @data
   end
