@@ -6,35 +6,33 @@ class NameFinder
       @length = string.length
     end
 
-    attr_reader :position, :length
-
     def advance_by(n)
-      new(position + n)
+      new(@position + n)
     end
 
     def advance_past(cp)
-      p = (position ... length).find { |i| @string[i] == cp }
+      p = (@position ... @length).find { |i| @string[i] == cp }
       if p
         new(p + 1)
       else
-        new(length)
+        new(@length)
       end
     end
 
     def at_end?
-      position >= length
+      @position >= @length
     end
 
     def head
-      @string[position, 1]
+      @string[@position, 1]
     end
 
     def rest
-      new(position + 1)
+      new(@position + 1)
     end
 
     def inspect(*args)
-      "<Buffer:#{@string[position .. -1].inspect}>"
+      "<Buffer:#{@string[@position .. -1].inspect}>"
     end
 
   private
