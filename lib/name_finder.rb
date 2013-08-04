@@ -1,6 +1,7 @@
 require "name_finder/version"
 require "name_finder/node_proxy"
 require "name_finder/buffer"
+require "set"
 
 class NameFinder
   def initialize(tree={})
@@ -22,11 +23,11 @@ class NameFinder
   end
 
   def find_all_in(haystack)
-    [].tap { |all|
+    Set.new.tap { |all|
       find(haystack) do |found|
         all << found
       end
-    }.uniq
+    }.to_a
   end
 
   def export
