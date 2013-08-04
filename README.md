@@ -46,4 +46,5 @@ nf.find_in "Use South Bermondsey station for Millwall"
 
 The present implementation handles only the letters A-Z. This can be customised
 by subclassing `NameFinder` and changing the implementation of `normalize`.
-The `normalize` method must emit a single space as the delimiter between words.
+The `normalize` method must use the same delimiter between words as is returned
+by the `delimiter` method (normally a single space).

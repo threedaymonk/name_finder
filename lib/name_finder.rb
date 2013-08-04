@@ -39,16 +39,16 @@ private
       found = root.find(remaining)
       if found
         yield found
-        remaining = remaining[found.length .. -1]
+        skip = found.length
       else
-        remaining = remaining.sub(/^\S+/, "")
+        skip = remaining.index(delimiter)
       end
-      remaining.lstrip!
+      remaining = remaining[skip + 1 .. -1]
     end
   end
 
   def normalize(term)
-    term.downcase.gsub(/\s+/, delimiter).gsub(/[^a-z ]+/, "")
+    term.downcase.gsub(/[^a-z]+/, delimiter)
   end
 
   def delimiter
