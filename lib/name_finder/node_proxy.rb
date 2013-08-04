@@ -7,38 +7,29 @@ class NameFinder
 
     attr_reader :node, :delimiter
 
-    def add(remainder, term)
-      if remainder
-        head, tail = split_first(remainder)
-        subtree    = node[tokenize(head)] ||= {}
-        wrap(subtree).add(tail, term)
-      else
+    def add(buffer, term)
+      if buffer.at_end?
         node[0] = term
+      else
+        subtree    = node[buffer.head] ||= {}
+        wrap(subtree).add(buffer.rest, term)
       end
     end
 
-    def find(remainder, new_word=false)
-      if remainder
-        head, tail = split_first(remainder)
-        if subtree = node[tokenize(head)]
-          wrap(subtree).find(tail, head == delimiter)
+    def find(buffer, new_word=false)
+      if buffer.at_end?
+        node[0]
+      else
+        head = buffer.head
+        if subtree = node[head]
+          wrap(subtree).find(buffer.rest, head == delimiter)
         elsif new_word
           node[0]
         end
-      else
-        node[0]
       end
     end
 
   private
-    def split_first(expression)
-      expression.scan(/^.|.+/)
-    end
-
-    def tokenize(s)
-      s[0,1]
-    end
-
     def wrap(node)
       NodeProxy.new(node, delimiter)
     end

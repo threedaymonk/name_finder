@@ -1,5 +1,6 @@
 require "name_finder/version"
 require "name_finder/node_proxy"
+require "name_finder/buffer"
 
 class NameFinder
   def initialize(tree={})
@@ -10,7 +11,7 @@ class NameFinder
   attr_reader :root
 
   def add(term)
-    root.add(normalize(term) + delimiter, term)
+    root.add Buffer.new(normalize(term) + delimiter), term
   end
 
   def find_in(haystack)
@@ -34,16 +35,15 @@ class NameFinder
 
 private
   def find(haystack)
-    remaining = normalize(haystack) + delimiter
-    while remaining.length > 0
+    remaining = Buffer.new(normalize(haystack) + delimiter)
+    while !remaining.at_end?
       found = root.find(remaining)
       if found
         yield found
-        skip = found.length
+        remaining = remaining.advance_by(found.length)
       else
-        skip = remaining.index(delimiter)
+        remaining = remaining.advance_past(delimiter)
       end
-      remaining = remaining[skip + 1 .. -1]
     end
   end
 
