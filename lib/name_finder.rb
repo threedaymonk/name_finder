@@ -2,9 +2,9 @@ require "name_finder/version"
 require "name_finder/node_proxy"
 
 class NameFinder
-  def initialize(data={})
-    @data = data
-    @root = NodeProxy.new(@data)
+  def initialize(tree={})
+    @tree = tree
+    @root = NodeProxy.new(tree)
   end
 
   attr_reader :root
@@ -38,7 +38,7 @@ class NameFinder
   end
 
   def export
-    @data
+    @tree
   end
 
 private
