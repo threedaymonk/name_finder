@@ -1,6 +1,7 @@
 # Name Finder
 
-Find the longest matching name from a list in a text.
+Find names from a know list in a text, taking account of names that may be a
+sub-part of a different, longer name.
 
 ## Examples
 
@@ -22,7 +23,7 @@ end
 ```
 
 It can find the best matching name even when one name is the same as part of
-another, either at the start:
+another, whether they overlap at the start:
 
 ```ruby
 nf.find_in "Change here for trains from Waterloo East"
@@ -38,8 +39,24 @@ or at the end:
 nf.find_in "Escalator closed at Bermondsey station"
 # => "Bermondsey"
 
-nf.find_in "Use South Bermondsey station for Millwall"
+nf.find_in "Use South Bermondsey station for Millwall FC"
 # => "South Bermondsey"
+```
+
+It can also find all the matching names, without false positives for names
+that are part of a longer name:
+
+```ruby
+nf.find_all_in "South Bermondsey and Waterloo East"
+# => ["South Bermondsey", "Waterloo East"]
+```
+
+Names that are part of a longer name are still found when listed separately,
+however:
+
+```ruby
+nf.find_all_in "South Bermondsey and Bermondsey"
+# => ["South Bermondsey", "Bermondsey"]
 ```
 
 ## Limitations
