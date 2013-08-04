@@ -34,7 +34,7 @@ class NameFinder
     end
 
     def inspect(*args)
-      @string[position .. -1].inspect
+      "<Buffer:#{@string[position .. -1].inspect}>"
     end
 
   private
