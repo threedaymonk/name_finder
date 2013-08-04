@@ -10,8 +10,8 @@ class NameFinder
       new(@position + n)
     end
 
-    def advance_past(cp)
-      p = (@position ... @length).find { |i| @string[i] == cp }
+    def advance_past(delimiter)
+      p = (@position ... @length).find { |i| @string[i] == delimiter }
       if p
         new(p + 1)
       else
