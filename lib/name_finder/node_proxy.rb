@@ -1,10 +1,11 @@
 class NameFinder
   class NodeProxy
-    def initialize(node)
+    def initialize(node, delimiter)
       @node = node
+      @delimiter = delimiter
     end
 
-    attr_reader :node
+    attr_reader :node, :delimiter
 
     def add(remainder, term)
       if remainder
@@ -20,7 +21,7 @@ class NameFinder
       if remainder
         head, tail = split_first(remainder)
         if subtree = node[tokenize(head)]
-          wrap(subtree).find(tail, head == " ")
+          wrap(subtree).find(tail, head == delimiter)
         elsif new_word
           node[0]
         end
@@ -39,7 +40,7 @@ class NameFinder
     end
 
     def wrap(node)
-      NodeProxy.new(node)
+      NodeProxy.new(node, delimiter)
     end
   end
 end
