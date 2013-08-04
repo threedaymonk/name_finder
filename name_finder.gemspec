@@ -7,6 +7,7 @@ spec = Gem::Specification.new do |s|
   s.name             = "name_finder"
   s.version          = NameFinder::VERSION
   s.author           = "Paul Battley"
+  s.license          = "MIT"
   s.email            = "pbattley@gmail.com"
   s.summary          = "Find matching names in text"
   s.description      = "Find matching names in text, taking account of names that overlap but are different (Waterloo and Waterloo East stations, for example)."
