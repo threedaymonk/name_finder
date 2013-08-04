@@ -33,7 +33,7 @@ class NameFinder
     end
 
     def tokenize(s)
-      s.unpack('U').first
+      s[0,1]
     end
 
     def wrap(node)
