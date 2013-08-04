@@ -3,8 +3,10 @@ require "name_finder/node_proxy"
 require "name_finder/buffer"
 require "set"
 
-# Find names from a know list in a text, taking account of names that may be a
-# sub-part of a different, longer name.
+# Find names from a know list in a text, taking account of names that may
+# overlap. For example, Waterloo and Waterloo East are separate stations;
+# NameFinder, knowing both, will not give a false match for Waterloo in a text
+# that mentions Waterloo East.
 #
 class NameFinder
 

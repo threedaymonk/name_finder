@@ -9,6 +9,7 @@ spec = Gem::Specification.new do |s|
   s.author           = "Paul Battley"
   s.email            = "pbattley@gmail.com"
   s.summary          = "Find matching names in text"
+  s.description      = "Find matching names in text, taking account of names that overlap but are different (Waterloo and Waterloo East stations, for example).
   s.files            = Dir["{lib,test,perf}/**/*.rb"]
   s.require_path     = "lib"
   s.test_files       = Dir["test/*_test.rb"]
