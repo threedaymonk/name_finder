@@ -52,6 +52,11 @@ describe NameFinder do
       subject.add "aa bbbb"
       subject.find_in("xx aa bbb xx").must_equal "aa bbb"
     end
+
+    it "should find without regard to punctuation" do
+      subject.add "Mr Ee"
+      subject.find_in("Mr. Ee").must_equal "Mr Ee"
+    end
   end
 
   describe "find_all_in" do
