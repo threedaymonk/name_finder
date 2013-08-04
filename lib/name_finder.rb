@@ -25,7 +25,7 @@ class NameFinder
       find(haystack) do |found|
         all << found
       end
-    }
+    }.uniq
   end
 
   def export

@@ -67,6 +67,12 @@ describe NameFinder do
       subject.add "cc dd"
       subject.find_all_in("aa bb cc dd").must_equal ["aa bb", "cc dd"]
     end
+
+    it "should find each match only once" do
+      subject.add "aa bb"
+      subject.add "cc dd"
+      subject.find_all_in("aa bb cc dd aa bb cc dd").must_equal ["aa bb", "cc dd"]
+    end
   end
 
   it "should export and import tree" do
